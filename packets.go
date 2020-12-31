@@ -630,6 +630,12 @@ func (rows *textRows) readRow(dest []driver.Value) error {
 		rows.mc = nil
 		return io.EOF
 	}
+	
+	if data[0] == iEOF && len(data) == 1 {
+		rows.mc = nil
+		return io.EOF
+	}
+	
 	if data[0] == iERR {
 		rows.mc = nil
 		return mc.handleErrorPacket(data)
